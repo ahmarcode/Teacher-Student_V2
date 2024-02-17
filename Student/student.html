@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Verification Form</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container" id="container">
+      <div class="form-container sign-up-container scrollable">
+          <form action="#">
+              <h1>Create Account</h1>
+              
+              <input type="text" name="name" placeholder="Name" />
+              
+              <input type="roll-no" name="roll-no" placeholder="Roll-no" />
+
+
+              <input type="email" name="email" placeholder="Email ID" />
+              
+              <input type="password" name="password" placeholder="Password" />
+
+              <select name="year" id="year">
+                <option value="">Select a year</option>
+                <!-- You can generate options dynamically using JavaScript or hardcode them -->
+                <!-- Hardcoded example: -->
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+
+                <!-- You can add more years as needed -->
+              </select>
+
+              <select name="Branch" id="Branch">
+                <option value="">Select a Branch</option>
+                <!-- You can generate options dynamically using JavaScript or hardcode them -->
+                <!-- Hardcoded example: -->
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="ENTC">ENTC</option>
+                <option value="Electrical">Electrical</option>
+                <!-- You can add more years as needed -->
+              </select>
+            
+              <button>Sign Up</button>
+          </form>
+      </div>
+      <div class="form-container sign-in-container">
+          <form action="#">
+              <h1>Sign in</h1>
+              <input type="email" placeholder="Email" />
+              <input type="password" placeholder="Password" />
+              <a href="#">Forgot your password?</a>
+              <button>Sign In</button>
+          </form>
+      </div>
+      <div class="overlay-container">
+          <div class="overlay">
+              <div class="overlay-panel overlay-left">
+                  <h1>Welcome Back!</h1>
+                  <p>To keep connected with us please login with your personal info</p>
+                  <button class="ghost" id="signIn">Sign In</button>
+              </div>
+              <div class="overlay-panel overlay-right">
+                  <h1>Hello, Friend!</h1>
+                  <p>Enter your personal details and start journey with us</p>
+                  <button class="ghost" id="signUp">Sign Up</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <footer>
+      <p>
+          All rights reserved - @neorelfex
+      </p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
