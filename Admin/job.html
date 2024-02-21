@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job Vacancy</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <style>
+        /* Some basic styling for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Post a Job Vacancy</h1>
+        <form id="jobForm">
+            <label for="vacancyPosition">Vacancy Position:</label>
+            <input type="text" id="vacancyPosition" name="vacancyPosition" required>
+
+            <label for="subjects">Subjects:</label>
+            <input type="text" id="subjects" name="subjects">
+
+            <label for="other">Other:</label>
+            <input type="text" id="other" name="other">
+
+            <label for="requiredQualifications">Required Qualifications:</label>
+            <textarea id="requiredQualifications" name="requiredQualifications" rows="4" required></textarea>
+
+            <label for="requiredExperience">Required Experience:</label>
+            <textarea id="requiredExperience" name="requiredExperience" rows="4" required></textarea>
+
+            <label for="responsibilities">Responsibilities:</label>
+            <textarea id="responsibilities" name="responsibilities" rows="4" required></textarea>
+
+            <button type="submit">Post Job Vacancy</button>
+        </form>
+
+        <h2>List of Job Vacancies</h2>
+        <ul id="jobList"></ul>
+    </div>
+
+    <script>
+        // document.getElementById('jobForm').addEventListener('submit', function(event) {
+        //     event.preventDefault(); // Prevent form submission
+
+        //     // Get form values
+        //     var vacancyPosition = document.getElementById('vacancyPosition').value;
+        //     var subjects = document.getElementById('subjects').value;
+        //     var other = document.getElementById('other').value;
+        //     var requiredQualifications = document.getElementById('requiredQualifications').value;
+        //     var requiredExperience = document.getElementById('requiredExperience').value;
+        //     var responsibilities = document.getElementById('responsibilities').value;
+
+        //     // Create list item for the new job vacancy
+        //     var li = document.createElement('li');
+        //     li.innerHTML = `
+        //         <strong>${vacancyPosition}</strong><br>
+        //         <strong>Subjects:</strong> ${subjects}<br>
+        //         <strong>Other:</strong> ${other}<br>
+        //         <strong>Required Qualifications:</strong> ${requiredQualifications}<br>
+        //         <strong>Required Experience:</strong> ${requiredExperience}<br>
+        //         <strong>Responsibilities:</strong> ${responsibilities}
+        //     `;
+
+        //     // Append new job vacancy to the list
+        //     document.getElementById('jobList').appendChild(li);
+
+        //     // Clear form fields
+        //     document.getElementById('jobForm').reset();
+        // });
+
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyBy5nialtm6ZCVoVKFDlOiaxhq408kvUIk",
+            authDomain: "authentication-trial-2f457.firebaseapp.com",
+            databaseURL: "https://authentication-trial-2f457-default-rtdb.firebaseio.com",
+            projectId: "authentication-trial-2f457",
+            storageBucket: "authentication-trial-2f457.appspot.com",
+            messagingSenderId: "998398509539",
+            appId: "1:998398509539:web:dcd9b1305cc128994960d6"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to your Firebase Realtime Database
+        var database = firebase.database();
+
+        document.getElementById('jobForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            var vacancyPosition = document.getElementById('vacancyPosition').value;
+            var subjects = document.getElementById('subjects').value;
+            var other = document.getElementById('other').value;
+            var requiredQualifications = document.getElementById('requiredQualifications').value;
+            var requiredExperience = document.getElementById('requiredExperience').value;
+            var responsibilities = document.getElementById('responsibilities').value;
+
+            // Push data to Firebase
+            database.ref('jobVacancies').push({
+                vacancyPosition: vacancyPosition,
+                subjects: subjects,
+                other: other,
+                requiredQualifications: requiredQualifications,
+                requiredExperience: requiredExperience,
+                responsibilities: responsibilities
+            }).then(function () {
+                // Clear form fields
+                document.getElementById('jobForm').reset();
+                window.location.href = '../Teacher/find-job.html?userId=' + firebase.auth().currentUser.uid;
+            }).catch(function (error) {
+                console.error('Error writing to Firebase Database', error);
+            });
+        });
+    </script>
+</body>
+
+</html>

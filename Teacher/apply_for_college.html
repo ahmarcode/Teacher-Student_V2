@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Job Applications</title>
+  <style>
+    body {
+      display: grid;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .college-name {
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+
+    .apply-button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .profile-card {
+      display: flex;
+      justify-content: center;
+      /*align-items: center;*/
+      height: 50vh;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 400px;
+
+    }
+
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 20px;
+    }
+
+    .info {
+      padding: 20px;
+    }
+
+    .info p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Job Applications for Colleges/Schools</h1>
+  </header>
+  <br>
+  <br>
+
+  <div class="profile-card">
+    <div class="card">
+      <img class="profile-photo" src="360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="Profile Photo">
+      <div class="info">
+        <p><strong>Name:</strong> --- </p>
+        <p><strong>Email:</strong> --- </p>
+        <p><strong>Experience:</strong> --- </p>
+        <p><strong>Qualification:</strong> --- </p>
+      </div>
+    </div>
+  </div>
+  <a href="find-job.html"><button>Apply for Jobs</button></a>
+
+  <!-- Add more sections for additional colleges -->
+</body>
+<script type="module">
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get('userId');
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBy5nialtm6ZCVoVKFDlOiaxhq408kvUIk",
+    authDomain: "authentication-trial-2f457.firebaseapp.com",
+    databaseURL: "https://authentication-trial-2f457-default-rtdb.firebaseio.com",
+    projectId: "authentication-trial-2f457",
+    storageBucket: "authentication-trial-2f457.appspot.com",
+    messagingSenderId: "998398509539",
+    appId: "1:998398509539:web:dcd9b1305cc128994960d6"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const dbRef = ref(getDatabase());
+
+
+  get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      document.querySelector('.info').innerHTML = `
+                <p><strong>Name:</strong> ${userData.name}</p>
+                <p><strong>Email:</strong> ${userData.email}</p>
+                <p><strong>Experience:</strong> ${userData.experience}</p>
+                <p><strong>Qualification:</strong> ${userData.qualification}</p>
+            `;
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+
+</script>
+
+<!-- <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script> -->
+
+<!-- <script type="module" src="apply.js"></script> -->
+
+</html>

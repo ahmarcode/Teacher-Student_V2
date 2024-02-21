@@ -105,7 +105,7 @@ submitButton.addEventListener("click", function () {
       // ...
       // Assuming userID is the variable holding the user's ID
       // Replace with the actual user ID
-      window.location.href = `apply_for_college.html?userId=${userId}`;
+      window.location.href = `student-main.html`;
 
     })
     .catch((error) => {

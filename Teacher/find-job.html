@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs</title>
+    <style>
+        section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .college-name {
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+
+    .apply-button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="job college-name">College Name 1</div>
+        <button class="apply-button">Apply</button>
+    </section>
+
+    <section>
+        <div class="college-name">College Name 2</div>
+        <button class="apply-button">Apply</button>
+    </section>
+</body>
+<script type="module">
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('userId');
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBy5nialtm6ZCVoVKFDlOiaxhq408kvUIk",
+        authDomain: "authentication-trial-2f457.firebaseapp.com",
+        databaseURL: "https://authentication-trial-2f457-default-rtdb.firebaseio.com",
+        projectId: "authentication-trial-2f457",
+        storageBucket: "authentication-trial-2f457.appspot.com",
+        messagingSenderId: "998398509539",
+        appId: "1:998398509539:web:dcd9b1305cc128994960d6"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const dbRef = ref(getDatabase());
+    // console.log(userId);
+    get(child(dbRef, "users/qgMnIZfucdgkr78BY1Pp89aGMUm2")).then((snapshot) => {
+        if (snapshot.exists()) {
+            const jobVacanciesData = snapshot.val();
+            const jobList = document.getElementById("job");
+            console.log(snapshot.val())
+
+            // Iterate over each job vacancy and render it
+            document.querySelector('.job').innerHTML = `
+                <p><strong>Name:</strong> ${jobVacanciesData.vacancyPosition}</p>
+                <p><strong>Subject:</strong> ${jobVacanciesData.subjects}</p>
+                <p><strong>Required Experience:</strong> ${jobVacanciesData.requiredExperience}</p>
+                <p><strong>Required Qualification:</strong> ${jobVacanciesData.requiredQualification}</p>
+                <p><strong>Extra Subject (optional):</strong> ${jobVacanciesData.other}</p>
+            `;
+        } else {
+            console.log("No job vacancies available");
+        }
+    }).catch((error) => {
+        console.error("Error fetching job vacancies: ", error);
+    });
+
+
+</script>
+
+</script>
+
+</html>

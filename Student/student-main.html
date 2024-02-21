@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #welcome-msg {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #tabs-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ddd;
+            padding: 10px;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        #videos-container {
+            margin: 20px;
+        }
+
+        .video-wrapper {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .video-heading {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+
+        .rating-stars {
+            margin-top: 5px;
+        }
+
+        .stars {
+            cursor: pointer;
+        }
+
+        .stars:hover,
+        .stars.checked {
+            color: orange;
+        }
+
+        .star-rating {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-msg">
+        <h1>Welcome to the Video Dashboard</h1>
+    </div>
+
+    <div id="tabs-container">
+        <div class="tab" onclick="changeTab('subject1')">Subject 1</div>
+        <div class="tab" onclick="changeTab('subject2')">Subject 2</div>
+        <div class="tab" onclick="changeTab('subject3')">Subject 3</div>
+        <!-- Add more tabs as needed -->
+    </div>
+
+    <div id="videos-container">
+        <!-- Video content will be dynamically added here -->
+    </div>
+
+    <script>
+        const videosData = {
+            subject1: [
+                { title: 'Video 1', choice: 'Choice 1', videoId: 'example_video_id_1' },
+                { title: 'Video 2', choice: 'Choice 2', videoId: 'example_video_id_2' },
+            ],
+            subject2: [
+                { title: 'Video 3', choice: 'Choice 1', videoId: 'example_video_id_3' },
+                { title: 'Video 4', choice: 'Choice 2', videoId: 'example_video_id_4' },
+            ],
+            subject3: [
+                { title: 'Video 5', choice: 'Choice 1', videoId: 'example_video_id_5' },
+                { title: 'Video 6', choice: 'Choice 2', videoId: 'example_video_id_6' },
+            ],
+        };
+
+        function changeTab(subject) {
+            const videoContainer = document.getElementById('videos-container');
+            let tabHeading = "";
+
+            if (subject === 'subject1') {
+                tabHeading = "Videos for Subject 1";
+            } else if (subject === 'subject2') {
+                tabHeading = "Videos for Subject 2";
+            } else if (subject === 'subject3') {
+                tabHeading = "Videos for Subject 3";
+            }
+            
+            document.getElementById('welcome-msg').innerHTML = `<h1>${tabHeading}</h1>`;
+
+            const videos = videosData[subject];
+
+            videoContainer.innerHTML = '';
+
+            videos.forEach((video, index) => {
+                videoContainer.innerHTML += `<div class="video-wrapper">
+                                                <div class="video-heading">${video.title} - ${video.choice}</div>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allowfullscreen></iframe>
+                                                <div class="rating-container">
+                                                    <div class="rating-stars">
+                                                        <div>Delivery:</div>
+                                                        <span class="stars" onclick="rateVideo(1, 'delivery', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(2, 'delivery', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(3, 'delivery', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(4, 'delivery', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(5, 'delivery', '${subject}', ${index})">★</span>
+                                                        <span class="star-rating" id="star-rating-delivery-${subject}-${index}">0/5</span>
+                                                    </div>
+                                                    <div class="rating-stars">
+                                                        <div>Methodology:</div>
+                                                        <span class="stars" onclick="rateVideo(1, 'methodology', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(2, 'methodology', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(3, 'methodology', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(4, 'methodology', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(5, 'methodology', '${subject}', ${index})">★</span>
+                                                        <span class="star-rating" id="star-rating-methodology-${subject}-${index}">0/5</span>
+                                                    </div>
+                                                    <div class="rating-stars">
+                                                        <div>On-Point:</div>
+                                                        <span class="stars" onclick="rateVideo(1, 'on-point', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(2, 'on-point', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(3, 'on-point', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(4, 'on-point', '${subject}', ${index})">★</span>
+                                                        <span class="stars" onclick="rateVideo(5, 'on-point', '${subject}', ${index})">★</span>
+                                                        <span class="star-rating" id="star-rating-on-point-${subject}-${index}">0/5</span>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+            });
+        }
+
+        function rateVideo(rating, field, subject, index) {
+            const videoRating = document.getElementById(`star-rating-${field}-${subject}-${index}`);
+            videoRating.textContent = `${field.charAt(0).toUpperCase() + field.slice(1)}: ${rating}/5`;
+
+            // You can handle the rating submission or storage logic here
+        }
+    </script>
+</body>
+</html>
+    
