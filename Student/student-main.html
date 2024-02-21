@@ -27,10 +27,10 @@
         }
 
         .tab {
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #fff;
+                cursor: pointer;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #fff;
         }
 
         #videos-container {
@@ -73,6 +73,16 @@
         .star-rating {
             margin-left: 5px;
         }
+
+        .submit {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: green;
+            display: flex;
+            align-item: center;
+        }
+
     </style>
 </head>
 <body>
@@ -91,7 +101,7 @@
     <div id="videos-container">
         <!-- Video content will be dynamically added here -->
     </div>
-
+    <button class="submit">Submit</button>
     <script>
         const videosData = {
             subject1: [
